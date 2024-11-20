@@ -15,12 +15,12 @@ OBJS := $(SRC:.c=.o)
 all: $(PROG)
 
 $(PROG): $(OBJS)
-	$(CC) -o $(PROG) $(OBJS) $(LDLIBS)
 
 install: $(PROG)
 	install -m 0755 -d $(INSTALL_DIR)/usr/bin
 	install -m 0755 $(PROG) $(INSTALL_DIR)/usr/bin
 	install -m 0755 -d $(INSTALL_DIR)/etc/init.d
 	install -m 0755 esme-led $(INSTALL_DIR)/etc/init.d
+
 clean:
 	-$(RM) -rf $(OBJS) $(PROG)

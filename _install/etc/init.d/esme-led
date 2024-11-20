@@ -1,0 +1,41 @@
+#!/bin/sh
+### BEGIN INIT INFO
+# Provides:          esme-led
+# Required-Start:    $remote_fs $time
+# Required-Stop:     $remote_fs $time
+# Default-Start:     3 4 5
+# Default-Stop:      0 1 2 6
+# Short-Description: ESME LED GPIO#17 toggle service
+### END INIT INFO
+
+# Nom du programme
+PROGRAM="/usr/bin/gpiod"
+
+case "$1" in
+    start)
+        echo "Starting esme-led..."
+        start-stop-daemon --start --background --exec $PROGRAM
+        ;;
+    stop)
+        echo "Stopping esme-led..."
+        start-stop-daemon --stop --exec $PROGRAM
+        ;;
+    restart)
+        echo "Restarting esme-led..."
+        $0 stop
+        $0 start
+        ;;
+    status)
+        if pidof $PROGRAM > /dev/null; then
+            echo "Status of esme-led: running with PID $(pidof $PROGRAM)"
+        else
+            echo "Status of esme-led: stopped"
+        fi
+        ;;
+    *)
+        echo "Usage: esme-led {start|stop|restart|status}"
+        exit 1
+        ;;
+esac
+
+exit 0
